@@ -1,18 +1,39 @@
 import axios from "axios";
 
 export function getWeather(lat, lon, timezone) {
-  return axios
-    .get(
-      "https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&current_weather=true&timeformat=unixtime",
-      {
-        params: {
-          latitude: lat,
-          longitude: lon,
-          timezone,
-        },
+  console.log(timezone);
+  // return axios
+  //   .get(
+  //     "https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&current_weather=true&timeformat=unixtime",
+  //     {
+  //       params: {
+  //         latitude: lat,
+  //         longitude: lon,
+  //         timezone,
+  //       },
+  //     }
+  //   )
+  //   .then(({ data }) => {
+  //     return {
+  //       current: parseCurrentWeather(data),
+  //       daily: parseDailyWeather(data),
+  //       hourly: parseHourlyWeather(data),
+  //     };
+  //   });
+  let myRequest = new Request(
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&timezone=${timezone}&hourly=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&current_weather=true&timeformat=unixtime`
+  );
+  fetch(myRequest)
+    .then(function (resp) {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        alert(
+          "Oops! There looks like there was an error in fetching weather data. Please try again."
+        );
       }
-    )
-    .then(({ data }) => {
+    })
+    .then((data) => {
       return {
         current: parseCurrentWeather(data),
         daily: parseDailyWeather(data),
@@ -20,6 +41,27 @@ export function getWeather(lat, lon, timezone) {
       };
     });
 }
+
+// let myRequest = new Request(
+//   `https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&current_weather=true&timeformat=unixtime`
+// );
+// fetch(myRequest)
+//   .then(function (resp) {
+//     if (resp.ok) {
+//       return resp.json();
+//     } else {
+//       alert(
+//         "Oops! There looks like there was an error in fetching weather data. Please try again."
+//       );
+//     }
+//   })
+//   .then((data) => {
+//     return {
+//       current: parseCurrentWeather(data),
+//       daily: parseDailyWeather(data),
+//       hourly: parseHourlyWeather(data),
+//     };
+//   });
 
 function parseCurrentWeather({ current_weather, daily }) {
   const {
