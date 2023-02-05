@@ -2,6 +2,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  text-align: center;
 }
 
 body {
@@ -31,29 +32,54 @@ body {
   border-right: 3px solid hsl(200, 100%, 10%);
 }
 
-.weather-icon {
-  width: 40px;
-  height: 40px;
+.day-section > .day-card > .weather-icon {
+  width: 70px;
+  height: 70px;
   object-fit: contain;
 }
 
 .weather-icon.large {
-  width: 80px;
-  height: 80px;
+  width: 60%;
+  height: 60%;
+}
+
+@media (max-width: 670px) {
+  .header-left {
+    border-right: none;
+    border-bottom: 3px solid hsl(200, 100%, 10%);
+    margin-bottom: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .header-right {
+    margin-top: 10px;
+    font-size: 100%;
+  }
 }
 
 .header-current-temp {
-  font-size: 2rem;
-  margin-left: 1rem;
+  font-size: 8vw;
+  margin-left: 1.5rem;
 }
 
 .header-right {
   display: grid;
   width: 50%;
+  height: 100%;
   justify-content: space-around;
   gap: 0.5rem;
   grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(2, auto);
+}
+
+@media (min-width: 760px) {
+  td .info-group > div:not([class="label"]),
+  td .info-group > div:not([class="label"]) > span {
+    font-size: 5rem;
+  }
 }
 
 .info-group {
@@ -62,24 +88,70 @@ body {
   align-items: center;
 }
 
+td .info-group > div:not([class="label"]),
+td .info-group > div:not([class="label"]) > span {
+  font-size: 2rem;
+}
+
+:is(.header-right .info-group div span) {
+  font-size: 4vw;
+}
+
+@media (min-width: 670px) {
+  :is(.header-right .info-group div span) {
+    font-size: 3vw;
+  }
+
+  :is(.header-right .label) {
+    font-size: 3vw;
+  }
+}
+
+@media (max-width: 471px) {
+  tr {
+    display: grid;
+    grid-template-columns: repeat(2, 50vw);
+  }
+
+  td .weather-icon {
+    width: 18vw;
+    height: 18vw;
+  }
+}
+
+:is(.weather-icon) {
+  width: 5vw;
+  height: 5vw;
+}
+
 .label {
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: hsl(200, 100%, 20%);
+}
+
+@media (max-width: 670px) {
+  .header-right .label {
+    font-size: 5vw;
+  }
 }
 
 .value-sub-info {
   font-weight: lighter;
-  font-size: 0.75rem;
+  font-size: 100%;
 }
 
 .day-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 80px);
+  grid-template-columns: repeat(auto-fit, 200px);
   gap: 0.5rem;
   justify-content: center;
   padding: 1.25rem;
+}
+
+.info-group > div > span {
+  font-size: 100%;
 }
 
 .day-card {
@@ -92,9 +164,13 @@ body {
 }
 
 .day-card-day {
-  font-size: 0.75rem;
+  font-size: 2rem;
   color: hsl(200, 100%, 20%);
   margin-top: 0.5rem;
+}
+
+.day-card-degree {
+  font-size: 1.75rem;
 }
 
 .hour-section {
